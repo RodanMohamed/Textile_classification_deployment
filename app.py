@@ -45,14 +45,14 @@ st.markdown(
         text-align: center;
         color: white;
         font-size: 40px;
-        margin-top: 20px;
+        margin-top: 23px;
     }
 
     .header-logo {
         position: absolute;
         left: 15px;  /* Keeps the logo fixed on the left */
         width: 120px;  /* Adjusted logo size */
-        margin-top: 20px;
+        margin-top: 27px;
     }
 
     /* Main Content */
