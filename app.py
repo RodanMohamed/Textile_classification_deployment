@@ -13,6 +13,7 @@ def _get_image_base64(image_path):
 st.set_page_config(page_title="Textile Classification", layout="centered")
 
 # Custom CSS for styling
+# Custom CSS for styling
 st.markdown(
     """
     <style>
@@ -29,29 +30,29 @@ st.markdown(
         left: 0;
         width: 100%;
         background-color: #336699;
-        padding: 35px;
+        padding: 30px;  /* Adjusted padding */
         border-radius: 10px;
         color: white;
-        font-size: 36px;
+        font-size: 24px;  /* Adjusted font size */
         font-weight: bold;
         display: flex;
-        justify-content: space-between;
+        justify-content: center;  /* Center the title */
         align-items: center;
-        text-align: center;
         z-index: 1000;  /* Ensures header is always on top */
     }
 
     .header-title {
-        flex-grow: 1;
         text-align: center;
-        color:white;
-        margin-right: 400px;
+        color: white;
+        font-size: 40px;
+        margin-top: 20px;
     }
 
     .header-logo {
-        width: 100px;
-        margin-left: 5px;
-        margin-top:30px;
+        position: absolute;
+        left: 15px;  /* Keeps the logo fixed on the left */
+        width: 120px;  /* Adjusted logo size */
+        margin-top: 20px;
     }
 
     /* Main Content */
@@ -85,7 +86,6 @@ st.markdown(
     .footer-icons img {
         width: 30px;
         margin-right: 26px;
-        
     }
 
     .prediction-box {
