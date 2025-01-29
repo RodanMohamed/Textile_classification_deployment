@@ -52,7 +52,7 @@ st.markdown(
         position: absolute;
         left: 15px;  /* Keeps the logo fixed on the left */
         width: 120px;  /* Adjusted logo size */
-        margin-top: 27px;
+        margin-top: 30px;
     }
 
     /* Main Content */
