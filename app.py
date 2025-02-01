@@ -84,7 +84,7 @@ st.markdown(
         margin-top:10px;
         position: absolute;
         left: 15px;
-        padding-left:115px;
+        padding-left:105px;
         padding-top:15px;
     }
 
@@ -194,7 +194,7 @@ logo_base64 = _get_image_base64(logo_path)
 st.markdown(
     f"""
     <div class="footer">
-        <p style="margin-bottom:15px;"><strong><u>Contact Us</u></strong></p>
+        <p style="margin-bottom:12px;"><strong><u>Contact Us</u></strong></p>
         <div class="footer-icons">
             <a href="https://www.facebook.com/InsightMindMatrix" target="_blank">
                 <img src="https://upload.wikimedia.org/wikipedia/commons/5/51/Facebook_f_logo_%282019%29.svg" alt="Facebook">
