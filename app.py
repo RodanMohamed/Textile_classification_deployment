@@ -208,7 +208,7 @@ st.markdown(
             </a>
             <!-- Clickable Logo Linking to the Website -->
             <a href="https://insightmindmatrix.com/" target="_blank" style="color:white;"><strong id="about">about us</strong>
-                <img src="data:image/png;base64,{logo_base64}" style="margin-left: 10px; width:70px; margin-bottom:17px; padding-bottom:16px;"> 
+                <img src="data:image/png;base64,{logo_base64}" style="margin-left: 10px; width:70px;  padding-bottom:12px;"> 
             </a>
         </div>
         <p><i>© 2025 Textile Classification App. | All Rights Reserved to Insight Mind Matrix </i></p>
