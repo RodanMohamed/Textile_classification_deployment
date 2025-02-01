@@ -86,7 +86,7 @@ st.markdown(
     align-items: center;
     flex-wrap: wrap;
     gap: 20px; /* Ensures spacing is uniform */
-    margin-right:10px;
+    margin-bottom:10px;
    
     
 }
