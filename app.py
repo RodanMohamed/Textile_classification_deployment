@@ -88,7 +88,7 @@ st.markdown(
     }
 
     .footer-icons img {
-        width: 20px;
+        width: 30px;
         margin-right: 26px;
     }
 
