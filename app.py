@@ -53,7 +53,7 @@ st.markdown(
         left: 15px;  /* Keeps the logo fixed on the left */
         width: 150px;  /* Adjusted logo size */
         margin-top: 30px;
-        padding: 15px;
+        padding-top: 15px;
         
     }
 
