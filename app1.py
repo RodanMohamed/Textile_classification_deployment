@@ -263,7 +263,7 @@ elif selected_option == "Live Classification":
             stframe.image(frame_rgb, channels="RGB", use_container_width=True)
 
         cap.release()
-        cv2.destroyAllWindows()
+      #  cv2.destroyAllWindows()
 
     else:
         st.info("please,Press Start Classification to begin.")
