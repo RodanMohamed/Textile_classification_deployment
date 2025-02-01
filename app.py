@@ -4,10 +4,12 @@ import base64
 from PIL import Image
 from textile_core import predict_image  # Import the core functionality
 
+
 # Helper function to encode image to base64
 def _get_image_base64(image_path):
     with open(image_path, "rb") as f:
         return base64.b64encode(f.read()).decode()
+
 
 # Set Streamlit page config
 st.set_page_config(page_title="Textile Classification", layout="centered")
@@ -54,7 +56,7 @@ st.markdown(
         width: 150px;  /* Adjusted logo size */
         margin-top: 30px;
         padding-top: 15px;
-        
+
     }
 
     /* Main Content */
@@ -80,14 +82,31 @@ st.markdown(
     }
 
     .footer-icons {
-        display: flex;
-        margin-left:-400px;
-        margin-top:10px;
-    }
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 20px; /* Ensures spacing is uniform */
+    margin-right:10px;
+   
+    
+}
 
     .footer-icons img {
         width: 30px;
-        margin-right: 26px;
+       /* margin-right: 26px; */
+       
+    }
+    @media screen and (max-width: 768px) {
+    .footer {
+        flex-direction: column;
+        height: auto;
+        padding: 15px;
+    }
+
+    .footer-icons {
+        margin: 10px 0;
+        justify-content: center;
+        
     }
 
     .prediction-box {
@@ -191,7 +210,7 @@ logo_base64 = _get_image_base64(logo_path)
 st.markdown(
     f"""
     <div class="footer">
-        <p style="margin:20px 30px;"><strong><u>Contact Us</u></strong></p>
+        <p style="margin:20px 0px; padding-left:450px;"><strong><u>Contact Us</u></strong></p>
         <div class="footer-icons">
             <a href="https://www.facebook.com/InsightMindMatrix" target="_blank">
                 <img src="https://upload.wikimedia.org/wikipedia/commons/5/51/Facebook_f_logo_%282019%29.svg" alt="Facebook">
@@ -205,7 +224,7 @@ st.markdown(
             </a>
             <!-- Clickable Logo Linking to the Website -->
             <a href="https://insightmindmatrix.com/" target="_blank" style="color:white;"><strong id="about">about us</strong>
-                <img src="data:image/png;base64,{logo_base64}" style="margin-left: 10px; width:45px; "> 
+                <img src="data:image/png;base64,{logo_base64}" style="margin-left: 20px; width:70px; "> 
             </a>
         </div>
         <p><i>© 2025 Textile Classification App. | All Rights Reserved to Insight Mind Matrix </i></p>
