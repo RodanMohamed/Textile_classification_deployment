@@ -84,7 +84,7 @@ st.markdown(
         margin-top:10px;
         position: absolute;
         left: 15px;
-        padding-left:130px;
+        padding-left:125px;
     }
 
     .footer-icons img {
