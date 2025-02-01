@@ -29,7 +29,7 @@ st.markdown(
         top: 0;
         left: 0;
         width: 100%;
-        background-color: #336699;
+        background-color: #24005e;
         padding: 30px;  /* Adjusted padding */
         border-radius: 10px;
         color: white;
@@ -66,7 +66,7 @@ st.markdown(
         bottom: 0;
         left: 0;
         width: 100%;
-        background-color: #336699;
+        background-color: #24005e;
         color: white;
         padding: 10px;
         text-align: center;
@@ -191,13 +191,13 @@ st.markdown(
     <div class="footer">
         <p style="margin:20px 30px;"><strong><u>Contact Us</u></strong></p>
         <div class="footer-icons">
-            <a href="https://www.facebook.com" target="_blank">
+            <a href="https://www.facebook.com/InsightMindMatrix" target="_blank">
                 <img src="https://upload.wikimedia.org/wikipedia/commons/5/51/Facebook_f_logo_%282019%29.svg" alt="Facebook">
             </a>
             <a href="https://www.linkedin.com/company/insight-mind-matrix/?lipi=urn%3Ali%3Apage%3Ad_flagship3_search_srp_all%3BQ1SdG%2FXITMCIh1yKZo3YRw%3D%3D" target="_blank">
                 <img src="https://upload.wikimedia.org/wikipedia/commons/8/81/LinkedIn_icon.svg" alt="LinkedIn">
             </a>
-            <a href="mailto:your-email@gmail.com" target="_blank"style="margin-right:20px;">
+            <a href="mailto:info@insightmindmatrix.com" target="_blank"style="margin-right:20px;">
                 <img src="https://upload.wikimedia.org/wikipedia/commons/4/4e/Gmail_Icon.png" alt="Gmail">
             </a>
             </a>
