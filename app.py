@@ -81,7 +81,6 @@ st.markdown(
 
     .footer-icons {
         display: flex;
-        margin-left:-400px;
         margin-top:10px;
         position: absolute;
         left: 15px;
