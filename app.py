@@ -30,10 +30,10 @@ st.markdown(
         left: 0;
         width: 100%;
         background-color: #24005e;
-        padding: 30px;  /* Adjusted padding */
+        padding: 30px;  
         border-radius: 10px;
         color: white;
-        font-size: 24px;  /* Adjusted font size */
+        font-size: 24px;  
         font-weight: bold;
         display: flex;
         justify-content: center;  /* Center the title */
@@ -83,6 +83,8 @@ st.markdown(
         display: flex;
         margin-left:-400px;
         margin-top:10px;
+        position: absolute;
+        left: 15px;
     }
 
     .footer-icons img {
