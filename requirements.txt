@@ -3,5 +3,5 @@ streamlit==1.22.0
 Pillow>=10.0.0
 keras==3.8.0
 tensorflow==2.17.1
-opencv-python
 streamlit-option-menu
+opencv-python-headless
