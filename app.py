@@ -51,7 +51,7 @@ st.markdown(
     .header-logo {
         position: absolute;
         left: 15px;  /* Keeps the logo fixed on the left */
-        width: 120px;  /* Adjusted logo size */
+        width: 140px;  /* Adjusted logo size */
         margin-top: 30px;
     }
 
