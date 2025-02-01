@@ -207,7 +207,7 @@ st.markdown(
             </a>
             </a>
             <!-- Clickable Logo Linking to the Website -->
-            <a href="https://insightmindmatrix.com/" target="_blank" style="color:white;margin-left:50px;"><strong id="about">about us</strong>
+            <a href="https://insightmindmatrix.com/" target="_blank" style="color:white;margin-left:70px;"><strong id="about">about us</strong>
                 <img src="data:image/png;base64,{logo_base64}" style="margin-left: 10px; width:70px; margin-bottom:15px;"> 
             </a>
         </div>
