@@ -95,7 +95,7 @@ st.markdown(
         width: 26px;
         margin-right: 26px;
     }
-
+    
     .prediction-box {
         width: 60%;
         margin: auto;
@@ -144,24 +144,61 @@ def classify_frame(frame):
     cv2.imwrite(temp_file.name, frame)
     class_name, confidence = predict_image(temp_file.name)
     return class_name, confidence
+st.sidebar.markdown(
+    """
+    <style>
+        .classification-box {
+            background-color: #e6e6fa;  /* Light Purple */
+            font-weight: bold;
+            padding: 10px;
+            border-radius: 10px;
+            text-align: center;
+            font-weight: bold;
+            color: #24005e;
+        }
+    </style>
+    <div class='classification-box'><h1><strong>Classification Types</strong></h1></div>
+    """,
+    unsafe_allow_html=True,
+)
 
+st.sidebar.markdown("---")  # Creates a visual divider
 
 # Sidebar using streamlit_option_menu
 with st.sidebar:
     selected_option = option_menu(
-        menu_title="Navigation",  # Sidebar title
+        menu_title="NAV",  # Sidebar title
         options=["Upload Image", "Live Classification"],  # Menu options
         icons=["upload", "camera"],  # Icons for each option
         menu_icon="cast",  # Sidebar menu icon
         default_index=0,  # Default selected option
-        styles={
-            "nav-link-selected": {"background-color": "#7f00bf"},
+                        styles={
+            "nav-link-selected": {
+                "background-color": "#24005e",
+                "color": "white",
+                "font-weight": "bold",
+            },
             "nav-link": {
-                "color": "#24005e",
-                "font-size": "16px",
+                "color": "black",
+                "font-size": "18px",
+                "border-radius": "7px",
+                "padding": "6px",
+                "transition": "0.01s",
+                "font-family": "Arial, sans-serif",
+            },
+            "nav-link:hover": {
+                "background-color": "#8f00ff",
+                "color": "#fff",
+                "transform": "scale(1.05)",
             },
         },
+        
+
+
     )
+
+
+
 
 # Main Content Wrapper
 st.markdown("<div class='main-content'>", unsafe_allow_html=True)
