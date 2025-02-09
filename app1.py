@@ -160,10 +160,10 @@ with st.sidebar:
         <style>
             .custom-image {{
                 position: relative; 
-                top: -35px;  /* Adjust padding */
+                top: -40px;  /* Adjust padding */
                 display: block;
                 margin: auto; /* Centering */
-                width: 125px;
+                width: 130px;
             }}
         </style>
         
