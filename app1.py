@@ -171,7 +171,7 @@ with st.sidebar:
         """,
         unsafe_allow_html=True
     )
-    st.sidebar.markdown("---")  # Creates a visual divider
+   # st.sidebar.markdown("---")  # Creates a visual divider
 
     # Sidebar menu
     selected_option = option_menu(
