@@ -6,6 +6,7 @@ from PIL import Image
 from textile_core import predict_image
 import cv2
 from streamlit_option_menu import option_menu
+import shutil
 
 
 # Helper function to encode image to base64
@@ -55,10 +56,11 @@ st.markdown(
 
     .header-logo {
         position: absolute;
-        left: 15px;  
-        width: 150px;
+        left: 20px;  
+        width: 100px;
         margin-top: 30px;
         padding-top: 15px;
+        border-radius: 10px;
     }
 
     .main-content {
@@ -122,7 +124,7 @@ st.markdown(
 
 
 # Get the current directory and logo path
-logo_path = os.path.join(os.path.dirname(__file__), "logo.png")
+logo_path = os.path.join(os.path.dirname(__file__), "insight_wave.jpg")
 
 
 # Display header with logo and centered title
@@ -144,35 +146,41 @@ def classify_frame(frame):
     cv2.imwrite(temp_file.name, frame)
     class_name, confidence = predict_image(temp_file.name)
     return class_name, confidence
-st.sidebar.markdown(
-    """
-    <style>
-        .classification-box {
-            background-color: #e6e6fa;  /* Light Purple */
-            font-weight: bold;
-            padding: 10px;
-            border-radius: 10px;
-            text-align: center;
-            font-weight: bold;
-            color: #24005e;
-        }
-    </style>
-    <div class='classification-box'><h1><strong>Classification Types</strong></h1></div>
-    """,
-    unsafe_allow_html=True,
-)
 
-st.sidebar.markdown("---")  # Creates a visual divider
+
+
+# Encode the image before inserting it
+website_logo = _get_image_base64("insight_wave.jpg")
 
 # Sidebar using streamlit_option_menu
 with st.sidebar:
+    # Add styled image
+    st.markdown(
+        f"""
+        <style>
+            .custom-image {{
+                position: relative; 
+                top: -30px;  /* Adjust padding */
+                display: block;
+                margin: auto; /* Centering */
+                width: 130px;
+            }}
+        </style>
+        
+        <img class="custom-image" src="data:image/png;base64,{website_logo}">  
+        """,
+        unsafe_allow_html=True
+    )
+    st.sidebar.markdown("---")  # Creates a visual divider
+
+    # Sidebar menu
     selected_option = option_menu(
         menu_title="NAV",  # Sidebar title
-        options=["Upload Image", "Live Classification"],  # Menu options
-        icons=["upload", "camera"],  # Icons for each option
+        options=["Upload Image", "Upload Video", "Real_Time Classification"],  # Menu options
+        icons=["upload", "upload", "camera"],  # Icons for each option
         menu_icon="cast",  # Sidebar menu icon
         default_index=0,  # Default selected option
-                        styles={
+        styles={
             "nav-link-selected": {
                 "background-color": "#24005e",
                 "color": "white",
@@ -192,10 +200,10 @@ with st.sidebar:
                 "transform": "scale(1.05)",
             },
         },
-        
-
-
     )
+
+
+    
 
 
 
@@ -257,55 +265,134 @@ if selected_option == "Upload Image":
             except Exception as e:
                 st.error(f"❌ Prediction failed: {e}")
 
-# Option 2: Live Classification
-# Option 2: Live Classification
-elif selected_option == "Live Classification":
-    st.title("🎥 Live Textile Classification")
 
-    # Add start/stop buttons for live classification
+def process_uploaded_video(video_file):
+    """Handles video processing and classification, then returns a downloadable processed video."""
+    st.subheader("Processing Video...")
+    
+    # Create a temporary directory to store video files
+    temp_dir = tempfile.mkdtemp()
+    input_path = os.path.join(temp_dir, "input_video.mp4")
+    output_path = os.path.join(temp_dir, "output_video.mp4")
+    
+    # Save the uploaded video
+    with open(input_path, "wb") as f:
+        f.write(video_file.read())
+    
+    # Initialize video processing
+    cap = cv2.VideoCapture(input_path)
+    fourcc = cv2.VideoWriter_fourcc(*'mp4v')
+    fps = int(cap.get(cv2.CAP_PROP_FPS))
+    frame_width, frame_height = int(cap.get(cv2.CAP_PROP_FRAME_WIDTH)), int(cap.get(cv2.CAP_PROP_FRAME_HEIGHT))
+    
+    out = cv2.VideoWriter(output_path, fourcc, fps, (frame_width, frame_height))
+    frame_placeholder = st.empty()
+    
+    while cap.isOpened():
+        ret, frame = cap.read()
+        if not ret:
+            break
+        
+        # Classify the frame and overlay text
+        label, confidence = classify_frame(frame)
+        cv2.putText(
+            frame, f"{label} ({confidence:.2f}%)", (10, 50),
+            cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 255, 0), 2, cv2.LINE_AA
+        )
+        
+        # Display the processed frame
+        frame_placeholder.image(frame, channels="BGR", use_container_width=True)
+        out.write(frame)
+    
+    # Release resources
+    cap.release()
+    out.release()
+    st.success("✅ Video processing completed!")
+    
+    # Provide download option
+    with open(output_path, "rb") as f:
+        st.download_button("⬇️ Download Processed Video", f.read(), "processed_video.mp4", "video/mp4")
+    
+    # Clean up temporary files
+    shutil.rmtree(temp_dir)
+
+# Video Upload Section
+if selected_option == "Upload Video":
+    st.info("📂 Upload a video to start classification.", icon="📂")
+    uploaded_video = st.file_uploader("", type=["mp4", "avi", "mov", "mkv"])
+    
+    if uploaded_video:
+        st.video(uploaded_video)
+        if st.button("▶ Start Video Processing"):
+            process_uploaded_video(uploaded_video)
+
+# Option 3: Real_Time Classification
+elif selected_option == "Real_Time Classification":
+    st.title("Real Time Classification 🎥")
+
+    # Initialize session state variables
     if 'live_classifying' not in st.session_state:
-        st.session_state.live_classifying = False  # Initialize the state
+        st.session_state.live_classifying = False
+    if 'video_file_path' not in st.session_state:
+        temp_video = tempfile.NamedTemporaryFile(delete=False, suffix=".mp4")
+        st.session_state.video_file_path = temp_video.name
+        temp_video.close()
 
-    # Button to start the live classification
-    start_button = st.button("Start Classification")
+    # Buttons for controlling classification
+    start_button = st.button("▶ Start Classification")
+    stop_button = st.button("⏹ Stop Classification")
+
     if start_button:
-        st.session_state.live_classifying = True  # Start live classification
+        st.session_state.live_classifying = True
 
-    # Button to stop the live classification
-    stop_button = st.button("Stop Classification")
     if stop_button:
-        st.session_state.live_classifying = False  # Stop live classification
+        st.session_state.live_classifying = False
 
+    # Start video capture
     if st.session_state.live_classifying:
-        cap = cv2.VideoCapture(0)  # Open webcam
-        stframe = st.empty()  # Placeholder for video feed
+        cap = cv2.VideoCapture(0)
+        if not cap.isOpened():
+            st.error("❌ Could not access the webcam.")
+        else:
+            stframe = st.empty()
+            
+            # Set up video writer
+            fourcc = cv2.VideoWriter_fourcc(*'mp4v')  # Video codec
+            fps = 20.0
+            frame_width = int(cap.get(cv2.CAP_PROP_FRAME_WIDTH))
+            frame_height = int(cap.get(cv2.CAP_PROP_FRAME_HEIGHT))
+            out = cv2.VideoWriter(st.session_state.video_file_path, fourcc, fps, (frame_width, frame_height))
 
-        while cap.isOpened():
-            ret, frame = cap.read()
-            if not ret:
-                st.error("Failed to capture video")
-                break
+            while cap.isOpened() and st.session_state.live_classifying:
+                ret, frame = cap.read()
+                if not ret:
+                    st.error("⚠ Video feed lost.")
+                    break
 
-            # Resize frame for consistent processing
-            frame_resized = cv2.resize(frame, (64, 64))
+                # Resize frame for consistent processing
+                frame_resized = cv2.resize(frame, (64, 64))
 
-            # Predict class
-            class_name, confidence = classify_frame(frame_resized)
+                # Predict class
+                class_name, confidence = classify_frame(frame_resized)
 
-            # Overlay text on frame
-            cv2.putText(frame, f"{class_name} ({confidence:.2f})", (20, 50), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 255, 0), 2)
+                # Overlay text on frame
+                cv2.putText(frame, f"{class_name} ({confidence:.2f})", 
+                            (20, 50), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 255, 0), 2)
 
-            # Convert OpenCV image to RGB
-            frame_rgb = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
-            stframe.image(frame_rgb, channels="RGB", use_container_width=True)
+                # Convert OpenCV image to RGB
+                frame_rgb = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
+                stframe.image(frame_rgb, channels="RGB", use_container_width=True)
 
-        cap.release()
-      #  cv2.destroyAllWindows()
+                # Save frame to video file
+                out.write(frame)
+
+            cap.release()
+            
 
     else:
-        st.info("please,Press Start Classification to begin.")
+        st.info("ℹ️ Press 'Start Classification' to begin.")
 
-
+ 
 
 # Close main content wrapper
 st.markdown("</div>", unsafe_allow_html=True)
@@ -326,7 +413,7 @@ st.markdown(
                 <img src="https://upload.wikimedia.org/wikipedia/commons/4/4e/Gmail_Icon.png" alt="Gmail">
             </a>
             <a href="https://insightmindmatrix.com/" target="_blank" style="color:white;margin-left:70px;"><strong id="about">about us</strong>
-                <img src="data:image/png;base64,{_get_image_base64(logo_path)}" style="margin-left: 10px; width:70px; margin-bottom:15px;"> 
+                <img src="data:image/png;base64,{_get_image_base64("logo.png")}" style="margin-left: 10px; width:70px; margin-bottom:15px;"> 
             </a>
         </div>
         <p><i>© 2025 Textile Classification App. | All Rights Reserved to Insight Mind Matrix </i></p>
