@@ -352,7 +352,10 @@ elif selected_option == "Real_Time Classification":
     if st.session_state.live_classifying:
         cap = cv2.VideoCapture(0)
         if not cap.isOpened():
-            st.error("❌ Could not access the webcam.")
+        cap = cv2.VideoCapture(1)  # Try second camera
+        if not cap.isOpened():
+    st.error("❌ Could not access the webcam. Please check permissions or connect a camera.")
+
         else:
             stframe = st.empty()
             
