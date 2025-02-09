@@ -350,7 +350,7 @@ elif selected_option == "Real_Time Classification":
 
     # Start video capture
     if st.session_state.live_classifying:
-        cap = st.camera_input(0)
+        cap = st.camera_input()
         if not cap.isOpened():
             st.error("❌ Could not access the webcam.")
 
