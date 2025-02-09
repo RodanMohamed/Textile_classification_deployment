@@ -301,7 +301,7 @@ def process_uploaded_video(video_file):
         )
         
         # Display the processed frame
-        frame_placeholder.image(frame, channels="BGR", use_container_width=True)
+        frame_placeholder.image(frame, channels="BGR")
         out.write(frame)
     
     # Release resources
